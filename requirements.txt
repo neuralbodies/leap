@@ -1,0 +1,16 @@
+torch
+numpy
+trimesh
+PyYAML
+scipy
+setuptools
+tqdm
+leap
+tensorboardx
+cython
+scikit-image
+yaml
+torchgeometry
+pyrender
+setuptools
+opencv-python

@@ -1,0 +1,62 @@
+method: leap_model
+
+device: cuda
+
+data:
+  dataset: amass
+  dataset_folder: ${TRAINING_DATA_ROOT}
+  bm_path: ${BODY_MODELS}/smplh
+
+  train_split: ${TRAINING_DATA_ROOT}/split_movi_training.txt
+  val_split: ${TRAINING_DATA_ROOT}/split_movi_validation.txt
+  test_split: ${TRAINING_DATA_ROOT}/split_movi_validation.txt
+
+  sampling_config:
+     n_points_posed: 2048  # number of points sampled in the posed space
+     n_points_can:  2048  # number of points sampled in the canonical space
+
+     points_uniform_ratio: 0.5  # 50% of training points are sampled uniformly and 50% around the mesh surface
+     bbox_padding: 0  # padding for boxes around meshes
+     points_padding: 0.1  # padding for points
+     points_sigma:  0.01  # sampling std
+
+model:  # hyper parameters for the occupancy model
+  shape_encoder:
+    out_dim: 100
+    hidden_size: 128
+
+  structure_encoder:
+    local_feature_size: 6
+
+  pose_encoder: null
+
+  onet:
+    hidden_size: 256
+
+  local_feature_encoder:
+    point_feature_len: 120
+
+  inv_lbs_model_path: ./trained_models/inv_lbs/movi_split/model_best.pt
+  inv_lbs_model_config:
+    hidden_size: 200  # per-layer number of neurons
+    pn_dim: 100  # PointNet feature dimensionality
+    fwd_trans_cond_dim: 80
+
+  fwd_lbs_model_path: ./trained_models/fwd_lbs/movi_split/model_best.pt
+  fwd_lbs_model_config:
+    hidden_size: 200  # per-layer number of neurons
+    pn_dim: 100  # PointNet feature dimensionality
+
+training:
+  out_dir: ./trained_models/leap_model
+  batch_size: 30
+
+  model_selection_metric: iou
+  model_selection_mode: maximize
+
+  backup_every: 2000
+  validate_every: 2000
+  max_iterations: 500000
+
+  max_epochs: -1
+  print_every: 50

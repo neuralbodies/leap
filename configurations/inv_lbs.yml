@@ -1,0 +1,39 @@
+method: inv_lbs
+
+device: cuda
+
+data:
+  dataset: amass
+  dataset_folder: ${TRAINING_DATA_ROOT}
+  bm_path: ${BODY_MODELS}/smplh
+
+  train_split: ${TRAINING_DATA_ROOT}/split_movi_training.txt
+  val_split: ${TRAINING_DATA_ROOT}/split_movi_validation.txt
+  test_split: ${TRAINING_DATA_ROOT}/split_movi_validation.txt
+
+  sampling_config:
+     n_points_posed:  2048  # number of points sampled in the posed space
+
+     points_uniform_ratio: 0.5  # 50% of training points are sampled uniformly and 50% around the mesh surface
+     bbox_padding: 0  # padding for boxes around meshes
+     points_padding: 0.1  # padding for points
+     points_sigma:  0.01  # sampling std
+
+model:  # hyper parameters for the forward LBS model
+  hidden_size: 200  # per-layer number of neurons
+  pn_dim: 100  # PointNet feature dimensionality
+  fwd_trans_cond_dim: 80
+
+training:
+  out_dir: ./trained_models/inv_lbs/movi_split
+  batch_size: 30
+
+  model_selection_metric: sk_loss
+  model_selection_mode: minimize
+
+  backup_every: 2000
+  validate_every: 2000
+  max_iterations: 500000
+
+  max_epochs: -1
+  print_every: 50
