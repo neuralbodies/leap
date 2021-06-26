@@ -78,16 +78,16 @@ cd training_code
 ```
 To train the forward LBS network, execute the following command: 
 ```shell script
-python train_leap.py ../configurations/fwd_lbs_training.yml
+python train_leap.py ../configurations/fwd_lbs.yml
 ```
 
 To train the inverse LBS network: 
 ```shell script
-python train_leap.py ../configurations/inv_lbs_training.yml
+python train_leap.py ../configurations/inv_lbs.yml
 ```
 Once the LBS networks are trained, execute the following command to train the occupancy network:
 ```shell script
-python train_leap.py ../configurations/occupancy_training.yml
+python train_leap.py ../configurations/leap_model.yml
 ```
 
 See specified yml configuration files for details about network hyperparameters. 
