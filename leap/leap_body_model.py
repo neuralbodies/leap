@@ -6,9 +6,13 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchgeometry
 import trimesh
-from skimage import measure
+
+try:
+    import torchgeometry
+    from skimage import measure
+except e:
+    pass
 
 from .modules import LEAPModel
 from .tools.libmise import MISE
