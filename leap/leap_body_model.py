@@ -11,7 +11,7 @@ import trimesh
 try:
     import torchgeometry
     from skimage import measure
-except e:
+except Exception:
     pass
 
 from .modules import LEAPModel
